@@ -1,0 +1,257 @@
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+<!--      list view definition-->
+      <record model="ir.ui.view" id="shopping_app_list_view">
+          <field name="name">shopping app view</field>
+          <field name="model">shopping.app</field>
+          <field name="arch" type="xml">
+              <tree>
+                  <field name="name" decoration-bf="1"/>
+                  <field name="sales" sum="Total Sales"/>
+                  <field name="salary"  sum="Total Salaries" optional="0"/>
+                  <field name="truefalse" string="IS Available"/>
+              </tree>
+          </field>
+      </record>
+
+      <record model="ir.ui.view" id="shopping_app_orders_tree_view">
+          <field name="name">shopping_app_orders_view</field>
+          <field name="model">shopping.app.orders</field>
+          <field name="arch" type="xml">
+              <tree>
+                  <field name="client_name" decoration-bf="1" />
+                  <field name="total_invoice_price" />
+                  <field name="date"/>
+                  <field name="phone" optional="0"/>
+                  <field name="description"/>
+                  <field name="address" optional="0"/>
+                  <field name="discount" optional="0"/>
+                  <field name="item_ids" invisible="1"/>
+              </tree>
+          </field>
+      </record>
+
+
+      <record model="ir.ui.view" id="order_items_tree_view">
+          <field name="name">order_items</field>
+          <field name="model">order.items</field>
+          <field name="arch" type="xml">
+              <tree>
+                  <field name="product_name" width="20%" decoration-bf="1"/>
+                  <field name="price" width="20%" />
+                  <field name="quantity" width="20%"/>
+                  <field name="total_price"    width="20%" sum="Total Amount"/>
+                  <field name="description" optional="0" width="20%"/>
+                  <field name="order_id" invisible="1"/>
+
+              </tree>
+          </field>
+      </record>
+
+
+    <!-- form views      -->
+      <record model="ir.ui.view" id="shopping_app_form_view">
+          <field name="name">shopping app form</field>
+          <field name="model">shopping.app</field>
+          <field name="arch" type="xml">
+              <form>
+                  <sheet>
+                      <h1>Add New Seller</h1>
+                      <div>
+                          <h2>
+                              <label for="name"/>
+                              <field name="name" default_focus="1" placeholder="Inter The Name"/>
+                          </h2>
+                      </div>
+                      <hr/>
+                        <group string="Main Info">
+                            <field name="sales" />
+                            <field name="salary"  />
+                            <field name="truefalse" string="IS Available"/>
+                        </group>
+                  </sheet>
+              </form>
+          </field>
+      </record>
+
+
+      <record model="ir.ui.view" id="shopping_app_orders_form_view">
+          <field name="name">shopping app orders form</field>
+          <field name="model">shopping.app.orders</field>
+          <field name="arch" type="xml">
+              <form>
+                  <sheet>
+                      <h1>Add New Client</h1>
+                          <div>
+                              <h2>
+                                <label for="client_name"/>
+                                <field name="client_name" placeholder="Enter Yor Name" default_focus="1"/>
+                          </h2>
+                      </div>
+                      <hr/>
+                      <group>
+                          <group >
+                              <field name="address" optional="0"/>
+                                <field name="date"/>
+                          </group>
+                          <group >
+                                <field name="phone" optional="0"/>
+                                <field name="discount" optional="0"/>
+                          </group>
+                      </group>
+                      <notebook>
+                          <page string="Additional Data">
+                              <group>
+                                  <field name="description"/>
+                              </group>
+                          </page>
+                          <page string="Payment Method">
+                              <group>
+                                  <field name="payment_method"/>
+                              </group>
+                          </page>
+                          <page string="Items" decoration-bf="1">
+                                  <field name="item_ids">
+                                      <tree editable="button"  >
+                                          <field name="product_name" decoration-bf="1" width="40%"/>
+                                          <field name="price" width="20%"/>
+                                          <field name="quantity" width="20%"/>
+                                          <field name="total_price" sum="Total Amount" width="20%"/>
+                                          <field name="description" width="20%" optional="0"/>
+                                      </tree>
+                                  </field>
+                          </page>
+                      </notebook>
+                  </sheet>
+              </form>
+          </field>
+      </record>
+
+
+
+      <record model="ir.ui.view" id="order_items_form_view">
+          <field name="name">order_items_form</field>
+          <field name="model">order.items</field>
+          <field name="arch" type="xml">
+              <form>
+                  <sheet>
+                      <h1>Add New Item</h1>
+                      <h2>
+                          <label for="product_name"/>
+                          <field name="product_name"  placeholder="Enter Item Name" decoration-bf="1"/>
+                      </h2>
+                      <hr/>
+                      <group>
+                          <field name="price" width="20%" />
+                          <field name="quantity" width="20%"/>
+                          <field name="total_price"   invisible="1"/>
+                      </group>
+                      <notebook>
+                          <page string="Additional Details">
+                              <field name="description" placeholder="Enter You Description"/>
+                          </page>
+                          <page string="Order Info">
+                                <group>
+                                    <group>
+                                        <field name="client_name"/>
+                                        <field name="phone"/>
+                                    </group>
+                                    <group>
+                                        <field name="address"/>
+                                        <field name="date"/>
+                                    </group>
+                                </group>
+                          </page>
+                      </notebook>
+                  </sheet>
+              </form>
+          </field>
+      </record>
+
+<!--     actions opening views on models -->
+    <!-- window action     -->
+
+      <record model="ir.actions.act_window" id="shopping_root_window_action"  >
+          <field name="name">Shopping App</field>
+          <field name="res_model">shopping.app</field>
+          <field name="view_mode">tree,form,kanban,pivot,graph</field>
+      </record>
+
+
+
+
+
+
+
+
+      <record model="ir.actions.act_window" id="cart_orders_window_action">
+          <field name="name">My Orders</field>
+          <field name="res_model">shopping.app.orders</field>
+          <field name="view_mode">tree,form</field>
+      </record>
+
+      <record model="ir.actions.act_window" id="cart_items_window_action">
+          <field name="name">Items In Cart</field>
+          <field name="res_model">order.items</field>
+          <field name="view_mode">tree,form</field>
+      </record>
+<!--
+    <record model="ir.actions.act_window" id="shopping_app.action_window">
+      <field name="name">shopping_app window</field>
+      <field name="res_model">shopping_app.shopping_app</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+-->
+
+    <!-- server action to the one above -->
+<!--
+    <record model="ir.actions.server" id="shopping_app.action_server">
+      <field name="name">shopping_app server</field>
+      <field name="model_id" ref="model_shopping_app_shopping_app"/>
+      <field name="state">code</field>
+      <field name="code">
+        action = {
+          "type": "ir.actions.act_window",
+          "view_mode": "tree,form",
+          "res_model": model._name,
+        }
+      </field>
+    </record>
+-->
+
+    <!-- Top menu item -->
+
+    <menuitem name="Shopping App" id="shopping_app_root_menu" action="shopping_root_window_action"/>
+
+
+
+<!--
+
+    <menuitem name="shopping_app" id="shopping_app.menu_root"/>
+-->
+    <!-- menu categories -->
+
+      <menuitem name="Home" id="shopping_home_menu" parent="shopping_app_root_menu" action="shopping_root_window_action"/>
+      <menuitem name="Shopping Cart" id="shopping_cart_menu" parent="shopping_app_root_menu"/>
+
+
+            <!-- from shopping cart      -->
+      <menuitem name="My Orders" id="shopping_cart_orders" parent="shopping_cart_menu" action="cart_orders_window_action"/>
+      <menuitem name="Items In Cart" id="shopping_cart_items" parent="shopping_cart_menu" action="cart_items_window_action"/>
+
+
+
+<!--
+    <menuitem name="Menu 1" id="shopping_app.menu_1" parent="shopping_app.menu_root"/>
+    <menuitem name="Menu 2" id="shopping_app.menu_2" parent="shopping_app.menu_root"/>
+-->
+    <!-- actions -->
+<!--
+    <menuitem name="List" id="shopping_app.menu_1_list" parent="shopping_app.menu_1"
+              action="shopping_app.action_window"/>
+    <menuitem name="Server to list" id="shopping_app" parent="shopping_app.menu_2"
+              action="shopping_app.action_server"/>
+-->
+  </data>
+</odoo>
