@@ -39,12 +39,12 @@
           <field name="arch" type="xml">
               <tree>
                   <field name="product_name" width="20%" decoration-bf="1"/>
+                  <field name="client_name" width="20%" decoration-bf="1"/>
                   <field name="price" width="20%" />
                   <field name="quantity" width="20%"/>
                   <field name="total_price"    width="20%" sum="Total Amount"/>
                   <field name="description" optional="0" width="20%"/>
                   <field name="order_id" invisible="1"/>
-
               </tree>
           </field>
       </record>
@@ -71,6 +71,16 @@
                             <field name="truefalse" string="IS Available"/>
                         </group>
                   </sheet>
+<!--                  <div class="oe_chatter">-->
+<!--                      <field name="message_follower_ids"/>-->
+<!--                      <field name="activity_ids"/>-->
+<!--                      <field name="message_ids"/>-->
+<!--                  </div>-->
+                  <div class="oe_chatter">
+                      <field name="activity_ids"/>
+                      <field name="message_ids"/>
+                      <field name="message_follower_ids"/>
+                  </div>
               </form>
           </field>
       </record>
@@ -100,6 +110,13 @@
                                 <field name="discount" optional="0"/>
                           </group>
                       </group>
+                      <group>
+                              <field name="num1"/>
+                              <field name="num2"/>
+                              <hr/><br/>
+                              <field name="num3"/>
+                              <field name="num_percent"/>
+                      </group>
                       <notebook>
                           <page string="Additional Data">
                               <group>
@@ -124,6 +141,11 @@
                           </page>
                       </notebook>
                   </sheet>
+                  <div class="oe_chatter">
+                      <field name="message_follower_ids"/>
+                      <field name="message_ids"/>
+                      <field name="activity_ids"/>
+                  </div>
               </form>
           </field>
       </record>
@@ -145,10 +167,11 @@
                       <group>
                           <field name="price" width="20%" />
                           <field name="quantity" width="20%"/>
-                          <field name="total_price"   invisible="1"/>
+                          <field name="total_price"   />
                       </group>
                       <notebook>
                           <page string="Additional Details">
+                              <label for="description"/>
                               <field name="description" placeholder="Enter You Description"/>
                           </page>
                           <page string="Order Info">
@@ -165,6 +188,11 @@
                           </page>
                       </notebook>
                   </sheet>
+                  <div class="oe_chatter">
+                      <field name="activity_ids"/>
+                      <field name="message_follower_ids"/>
+                      <field name="message_ids"/>
+                  </div>
               </form>
           </field>
       </record>
