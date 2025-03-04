@@ -56,6 +56,15 @@
           <field name="model">shopping.app</field>
           <field name="arch" type="xml">
               <form>
+                  <header>
+<!--                      <button name="event_reviewed" string="review" type="object" attrs="{'invisible':[('states','!=','new')]}"/>-->
+                      <button name="event_reviewed" string="Review" class="btn-primary" type="object" attrs="{'invisible':[('states','!=','new')]}"/>
+                      <button name="event_approved" type="object" class="btn-success" string="Approve" attrs="{'invisible':[('states','!=','reviewed')]}"  />
+                      <button name="event_refused" type="object" string="Refuse" class="btn-danger" attrs="{'invisible':[('states','!=','reviewed')]}"/>
+                      <button name="event_go_back" type="object" class="btn-warning"  string="Back" attrs="{'invisible':[('states','==','new')]}"/>
+                      <button name="event_clear" type="object" class="btn-danger"  string="Clear" attrs="{'invisible':[('states','in',['new','reviewed'])]}"/>
+                      <field name="states" widget="statusbar"/>
+                  </header>
                   <sheet>
                       <h1>Add New Seller</h1>
                       <div>
@@ -71,11 +80,7 @@
                             <field name="truefalse" string="IS Available"/>
                         </group>
                   </sheet>
-<!--                  <div class="oe_chatter">-->
-<!--                      <field name="message_follower_ids"/>-->
-<!--                      <field name="activity_ids"/>-->
-<!--                      <field name="message_ids"/>-->
-<!--                  </div>-->
+
                   <div class="oe_chatter">
                       <field name="activity_ids"/>
                       <field name="message_ids"/>
@@ -91,6 +96,14 @@
           <field name="model">shopping.app.orders</field>
           <field name="arch" type="xml">
               <form>
+                  <header>
+                      <button name="review_event" string="Review" class="btn-primary" type="object" attrs="{'invisible':[('status','!=','new')]}" />
+                      <button name="approve_event" string="Approve" class="btn-success" type="object" attrs="{'invisible':[('status','!=','review')]}" />
+                      <button name="refuse_event" string="Refuse" class="btn-danger" type="object" attrs="{'invisible':[('status','!=','review')]}" />
+                      <button name="clear_event" string="Clear" class="btn-danger" type="object" attrs="{'invisible':[('status','in',[ 'new','review'])]}" />
+                      <button name="back_event" string="Back" class="btn-warning" type="object" attrs="{'invisible':[('status','==','new')]}" />
+                      <field name="status" widget="statusbar"/>
+                  </header>
                   <sheet>
                       <h1>Add New Client</h1>
                           <div>
@@ -157,6 +170,14 @@
           <field name="model">order.items</field>
           <field name="arch" type="xml">
               <form>
+                  <header>
+                      <button name="review_event" string="Review" class="btn-primary" type="object" attrs="{'invisible':[('status','!=','new')]}" />
+                      <button name="approve_event" string="Approve" class="btn-success" type="object" attrs="{'invisible':[('status','!=','review')]}" />
+                      <button name="refuse_event" string="Refuse" class="btn-danger" type="object" attrs="{'invisible':[('status','!=','review')]}" />
+                      <button name="clear_event" string="Clear" class="btn-danger" type="object" attrs="{'invisible':[('status','in',[ 'new','review'])]}" />
+                      <button name="back_event" string="Back" class="btn-warning" type="object" attrs="{'invisible':[('status','==','new')]}" />
+                      <field name="status" widget="statusbar"/>
+                  </header>
                   <sheet>
                       <h1>Add New Item</h1>
                       <h2>

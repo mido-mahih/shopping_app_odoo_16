@@ -1,3 +1,5 @@
+from email.policy import default
+
 from odoo import models , fields ,api
 from odoo.exceptions import ValidationError
 
@@ -18,6 +20,8 @@ class Orders(models.Model):
     num1 = fields.Float()
     num2 = fields.Float()
     num3 = fields.Float(string="Result",readonly=1)
+    status = fields.Selection([("new", "New"), ("review", "Review"), ("approve", "Approve"), ("refuse", "Refuse")],
+                              default="new")
 
     # _sql_constraints = [
     #     ("unique_name","unique(client_name)","Name IS Exist"  )
@@ -49,6 +53,32 @@ class Orders(models.Model):
 
 
 
+    def review_event(self):
+        for r in self:
+            r.status = "review"
+
+    def approve_event(self):
+        for r in self:
+            r.status = "approve"
+
+    def refuse_event(self):
+        for r in self:
+            r.status = "refuse"
+
+    def clear_event(self):
+        for r in self:
+            r.status = "new"
+
+    def back_event(self):
+        for r in self:
+            status = {
+                "approve": "review",
+                "refuse": "review",
+                "review": "new",
+            }
+            r.status = status[r.status]
+
+
 class Items(models.Model):
         _name = 'order.items'
         _description = 'app to small shopping process'
@@ -59,6 +89,7 @@ class Items(models.Model):
         description = fields.Text()
         order_id = fields.Many2one('shopping.app.orders')
         total_price = fields.Float(string="Total Price",compute="_compute_total_price",store=1)
+        status = fields.Selection([("new","New"),("review","Review"),("approve","Approve"),("refuse","Refuse")],default="new")
         @api.depends("price","quantity")
         def _compute_total_price(self):
             for record in self:
@@ -76,8 +107,26 @@ class Items(models.Model):
         ]
 
 
-
-
+        def review_event(self):
+            for r in self:
+                r.status = "review"
+        def approve_event(self):
+            for r in self:
+                r.status = "approve"
+        def refuse_event(self):
+            for r in self:
+                r.status = "refuse"
+        def clear_event(self):
+            for r in self:
+                r.status = "new"
+        def back_event(self):
+            for r in self:
+                status = {
+                    "approve":"review",
+                    "refuse":"review",
+                    "review":"new",
+                }
+                r.status = status[r.status]
 
 
 
