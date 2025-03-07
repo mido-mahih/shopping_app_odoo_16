@@ -1,6 +1,6 @@
 <odoo>
   <data>
-    <!-- explicit list view definition -->
+      <!-- explicit list view definition -->
 <!--      list view definition-->
       <record model="ir.ui.view" id="shopping_app_list_view">
           <field name="name">shopping app view</field>
@@ -40,6 +40,8 @@
               <tree>
                   <field name="product_name" width="20%" decoration-bf="1"/>
                   <field name="client_name" width="20%" decoration-bf="1"/>
+                  <field name="price" width="20%" />
+                  <field name="in_stock" width="20%" />
                   <field name="price" width="20%" />
                   <field name="quantity" width="20%"/>
                   <field name="total_price"    width="20%" sum="Total Amount"/>
@@ -102,6 +104,8 @@
                       <button name="refuse_event" string="Refuse" class="btn-danger" type="object" attrs="{'invisible':[('status','!=','review')]}" />
                       <button name="clear_event" string="Clear" class="btn-danger" type="object" attrs="{'invisible':[('status','in',[ 'new','review'])]}" />
                       <button name="back_event" string="Back" class="btn-warning" type="object" attrs="{'invisible':[('status','==','new')]}" />
+                      <button name="add_test_product" string="add test product" type="object" class="btn-primary" attrs="{'invisible':[('status','!=','review')]}"/>
+                      <button name="biggest_quantity_items" type="object" string="biggest quantity items" />
                       <field name="status" widget="statusbar"/>
                   </header>
                   <sheet>
@@ -117,6 +121,7 @@
                           <group >
                               <field name="address" optional="0"/>
                                 <field name="date"/>
+                                <field name="item_ids" widget="many2many_tags"/>
                           </group>
                           <group >
                                 <field name="phone" optional="0"/>
@@ -187,6 +192,8 @@
                       <hr/>
                       <group>
                           <field name="price" width="20%" />
+                          <field name="in_stock" width="20%" />
+                          <field name="order_id" width="20%" />
                           <field name="quantity" width="20%"/>
                           <field name="total_price"   />
                       </group>
@@ -245,41 +252,10 @@
           <field name="res_model">order.items</field>
           <field name="view_mode">tree,form</field>
       </record>
-<!--
-    <record model="ir.actions.act_window" id="shopping_app.action_window">
-      <field name="name">shopping_app window</field>
-      <field name="res_model">shopping_app.shopping_app</field>
-      <field name="view_mode">tree,form</field>
-    </record>
--->
-
-    <!-- server action to the one above -->
-<!--
-    <record model="ir.actions.server" id="shopping_app.action_server">
-      <field name="name">shopping_app server</field>
-      <field name="model_id" ref="model_shopping_app_shopping_app"/>
-      <field name="state">code</field>
-      <field name="code">
-        action = {
-          "type": "ir.actions.act_window",
-          "view_mode": "tree,form",
-          "res_model": model._name,
-        }
-      </field>
-    </record>
--->
-
-    <!-- Top menu item -->
 
     <menuitem name="Shopping App" id="shopping_app_root_menu" action="shopping_root_window_action"/>
 
 
-
-<!--
-
-    <menuitem name="shopping_app" id="shopping_app.menu_root"/>
--->
-    <!-- menu categories -->
 
       <menuitem name="Home" id="shopping_home_menu" parent="shopping_app_root_menu" action="shopping_root_window_action"/>
       <menuitem name="Shopping Cart" id="shopping_cart_menu" parent="shopping_app_root_menu"/>
@@ -290,17 +266,5 @@
       <menuitem name="Items In Cart" id="shopping_cart_items" parent="shopping_cart_menu" action="cart_items_window_action"/>
 
 
-
-<!--
-    <menuitem name="Menu 1" id="shopping_app.menu_1" parent="shopping_app.menu_root"/>
-    <menuitem name="Menu 2" id="shopping_app.menu_2" parent="shopping_app.menu_root"/>
--->
-    <!-- actions -->
-<!--
-    <menuitem name="List" id="shopping_app.menu_1_list" parent="shopping_app.menu_1"
-              action="shopping_app.action_window"/>
-    <menuitem name="Server to list" id="shopping_app" parent="shopping_app.menu_2"
-              action="shopping_app.action_server"/>
--->
   </data>
 </odoo>

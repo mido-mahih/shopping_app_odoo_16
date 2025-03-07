@@ -7,6 +7,7 @@
     "depends":['base','mail'],
     "data":[
         "security/ir.model.access.csv",
-        "view/view.xml"
+        "view/view.xml",
+        "view/contacts_new_view.xml"
     ]
 }

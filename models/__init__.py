@@ -1,1 +1,1 @@
-from . import models , my_orders
+from . import models , my_orders , contacts_new_model

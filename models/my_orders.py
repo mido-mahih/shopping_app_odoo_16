@@ -8,6 +8,7 @@ class Orders(models.Model):
     _name = 'shopping.app.orders'
     _description = 'app to small shopping process'
     _inherit = ["mail.thread","mail.activity.mixin"]
+    _rec_name ="client_name"
     client_name = fields.Char(required=1 , tracking=1)
     date= fields.Date(string="Date",default=fields.Date.today)
     phone = fields.Char(required=1)
@@ -21,7 +22,7 @@ class Orders(models.Model):
     num2 = fields.Float()
     num3 = fields.Float(string="Result",readonly=1)
     status = fields.Selection([("new", "New"), ("review", "Review"), ("approve", "Approve"), ("refuse", "Refuse")],
-                              default="new")
+                              default="new", tracking=1)
 
     # _sql_constraints = [
     #     ("unique_name","unique(client_name)","Name IS Exist"  )
@@ -78,16 +79,35 @@ class Orders(models.Model):
             }
             r.status = status[r.status]
 
+    def add_test_product(self):
+        i= self.env['order.items'].search_count([('order_id','=',self.id)])
+        self.env['order.items'].create({
+            "product_name": f"test {i}",
+            'quantity':1,
+            'price':20,
+            'in_stock':True,
+            'order_id':self.id
+        })
+    def biggest_quantity_items(self):
+        items = self.env['order.items'].search([('quantity',">",1)])
+        for record in items:
+            print(record.product_name ,record.quantity )
+
+
+
+
 
 class Items(models.Model):
         _name = 'order.items'
         _description = 'app to small shopping process'
         _inherit = ["mail.thread","mail.activity.mixin"]
+        _rec_name = 'product_name'
         product_name = fields.Char(required=1 , tracking=1)
-        price = fields.Float(require=1,tracking=1)
-        quantity = fields.Integer(require=1)
+        price = fields.Float(required=1,tracking=1)
+        in_stock = fields.Boolean(string='In Stock',default=True)
+        quantity = fields.Integer(required=1)
         description = fields.Text()
-        order_id = fields.Many2one('shopping.app.orders')
+        order_id = fields.Many2one('shopping.app.orders', domain="[('status','=','review')]")
         total_price = fields.Float(string="Total Price",compute="_compute_total_price",store=1)
         status = fields.Selection([("new","New"),("review","Review"),("approve","Approve"),("refuse","Refuse")],default="new")
         @api.depends("price","quantity")
@@ -127,6 +147,7 @@ class Items(models.Model):
                     "review":"new",
                 }
                 r.status = status[r.status]
+
 
 
 
