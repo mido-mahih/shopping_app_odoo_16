@@ -1,0 +1,19 @@
+<odoo>
+    <record id="shopping_app_category" model="ir.module.category">
+       <field name="name">Shopping App</field>
+       <field name="description">Shopping App Access Categories</field>
+       <field name="sequence">7</field>
+    </record>
+
+    <record id="shopping_app_user_category" model="res.groups">
+        <field name="name">User</field>
+        <field name="category_id" ref="shopping_app_odoo_16.shopping_app_category"/>
+        <field name="implied_ids" eval="[(4,ref('base.group_user'))]"/>
+    </record>
+
+    <record id="shopping_app_admin_category" model="res.groups">
+        <field name="name">Admin</field>
+        <field name="category_id" ref="shopping_app_odoo_16.shopping_app_category"/>
+        <field name="implied_ids" eval="[(4,ref('shopping_app_odoo_16.shopping_app_user_category'))]"/>
+    </record>
+</odoo>

@@ -94,9 +94,6 @@ class Orders(models.Model):
             print(record.product_name ,record.quantity )
 
 
-
-
-
 class Items(models.Model):
         _name = 'order.items'
         _description = 'app to small shopping process'
