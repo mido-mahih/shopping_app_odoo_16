@@ -1,0 +1,12 @@
+<odoo>
+    <record id="shopping_app_report" model="ir.actions.report">
+        <field name="name">Get Report</field>
+        <field name="model">shopping.app</field>
+        <field name="report_type">qweb-html</field>
+        <field name="report_name">shopping_app_2.shopping_app_report.</field>
+        <field name="report_file">shopping_app_2.shopping_app_report.</field>
+        <field name="binding_model_id" ref="model_shopping_app"/>
+        <field name="binding_type">report</field>
+    </record>
+
+</odoo>

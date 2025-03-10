@@ -1,4 +1,11 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_shopping_app,shopping.pp,model_shopping_app,base.group_user,1,1,1,1
-access_shopping_app_orders,shopping.app.order,model_shopping_app_orders,base.group_user,1,1,1,1
-access_order_items,order.items,model_order_items,base.group_user,1,1,1,1
+
+access_shopping_app_user,shopping app user,model_shopping_app,shopping_app_user_category,1,0,0,0
+access_shopping_app_admin,shopping app admin,model_shopping_app,shopping_app_admin_category,1,1,1,1
+
+access_shopping_app_orders_user,shopping app orders user,model_shopping_app_orders,shopping_app_user_category,1,0,0,0
+access_shopping_app_orders_admin,shopping app orders admin,model_shopping_app_orders,shopping_app_admin_category,1,1,1,1
+
+
+access_order_items_user,order items user,model_order_items,shopping_app_user_category,1,0,0,0
+access_order_items_admin,order items admin,model_order_items,shopping_app_admin_category,1,1,1,1

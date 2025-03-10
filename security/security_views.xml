@@ -1,4 +1,7 @@
 <odoo>
+<!--    access_shopping_app,shopping.app,model_shopping_app,base.group_user,1,1,1,1-->
+<!--  access_shopping_app_orders,shopping.app.order,model_shopping_app_orders,base.group_user,1,1,1,1  -->
+<!--    access_order_items,order.items,model_order_items,base.group_user,1,1,1,1-->
     <record id="shopping_app_category" model="ir.module.category">
        <field name="name">Shopping App</field>
        <field name="description">Shopping App Access Categories</field>
@@ -7,13 +10,13 @@
 
     <record id="shopping_app_user_category" model="res.groups">
         <field name="name">User</field>
-        <field name="category_id" ref="shopping_app_odoo_16.shopping_app_category"/>
+        <field name="category_id" ref="shopping_app_2.shopping_app_category"/>
         <field name="implied_ids" eval="[(4,ref('base.group_user'))]"/>
     </record>
 
     <record id="shopping_app_admin_category" model="res.groups">
         <field name="name">Admin</field>
-        <field name="category_id" ref="shopping_app_odoo_16.shopping_app_category"/>
-        <field name="implied_ids" eval="[(4,ref('shopping_app_odoo_16.shopping_app_user_category'))]"/>
+        <field name="category_id" ref="shopping_app_2.shopping_app_category"/>
+        <field name="implied_ids" eval="[(4,ref('shopping_app_2.shopping_app_user_category'))]"/>
     </record>
 </odoo>
